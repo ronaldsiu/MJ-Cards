@@ -25,10 +25,10 @@ public class GamestateManager : MonoBehaviour
     public bool isPlayerTurn;
     public bool canDraw;
 
-    public bool matchSet1;
-    public bool matchSet2;
-    public bool matchSet3;
-    public bool matchPair4;
+    bool matchSet1;
+    bool matchSet2;
+    bool matchSet3;
+    bool matchPair4;
 
     public GamePhase gamePhase;
 
@@ -82,8 +82,8 @@ public class GamestateManager : MonoBehaviour
             deck.cards.Remove(deck.cards[0]);
             player.playerCardModel.Add(cardModel);
             cardModel.cardOwner = CardModel.CardOwner.Player;
-            canDraw = false;
-            gamePhase = GamePhase.playerCheckForWinHand;
+            //canDraw = false;
+            //gamePhase = GamePhase.playerCheckForWinHand;
         }
         else if (isPlayerTurn == false && canDraw == true)
         {
@@ -157,21 +157,535 @@ public class GamestateManager : MonoBehaviour
     public void CheckForWin()
     {
 
+        // Check First way to Win SetSetSetPair
+
         if(player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue
             || player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue - 1 && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue - 2)
         {
             matchSet1 = true;
+            Debug.Log("MatchSet1");
         }
         if (player.playerCardModel[3].cardValue == player.playerCardModel[4].cardValue && player.playerCardModel[3].cardValue == player.playerCardModel[5].cardValue
     || player.playerCardModel[3].cardValue == player.playerCardModel[4].cardValue - 1 && player.playerCardModel[3].cardValue == player.playerCardModel[5].cardValue - 2)
         {
             matchSet2 = true;
+            Debug.Log("MatchSet2");
         }
         if (player.playerCardModel[6].cardValue == player.playerCardModel[7].cardValue && player.playerCardModel[6].cardValue == player.playerCardModel[8].cardValue
     || player.playerCardModel[6].cardValue == player.playerCardModel[7].cardValue - 1 && player.playerCardModel[6].cardValue == player.playerCardModel[8].cardValue - 2)
         {
             matchSet3 = true;
+            Debug.Log("MatchSet3");
         }
+        if (player.playerCardModel[9].cardValue == player.playerCardModel[10].cardValue)
+        {
+            matchPair4 = true;
+            Debug.Log("MatchPair4");
+        }
+        if (matchSet1 == true && matchSet2 == true && matchSet3 == true && matchPair4 == true)
+        {
+            if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[9].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[9].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else { Debug.Log("Not a consistent Set"); }
+
+
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+
+        }
+        else
+        {
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+
+        // Check 2nd way to Win SetSetPairSet
+
+        if (player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue
+            || player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue - 1 && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue - 2)
+        {
+            matchSet1 = true;
+            Debug.Log("MatchSet1");
+        }
+        if (player.playerCardModel[3].cardValue == player.playerCardModel[4].cardValue && player.playerCardModel[3].cardValue == player.playerCardModel[5].cardValue
+    || player.playerCardModel[3].cardValue == player.playerCardModel[4].cardValue - 1 && player.playerCardModel[3].cardValue == player.playerCardModel[5].cardValue - 2)
+        {
+            matchSet2 = true;
+            Debug.Log("MatchSet2");
+        }
+        if (player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue
+    || player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue - 1 && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue - 2)
+        {
+            matchSet3 = true;
+            Debug.Log("MatchSet3");
+        }
+        if (player.playerCardModel[6].cardValue == player.playerCardModel[7].cardValue)
+        {
+            matchPair4 = true;
+            Debug.Log("MatchPair4");
+        }
+        if (matchSet1 == true && matchSet2 == true && matchSet3 == true && matchPair4 == true)
+        {
+            if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                            && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[6].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else { Debug.Log("Not a consistent Set"); }
+
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+        else
+        {
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+
+        // Check 3rd way to Win SetPairSetSet
+
+        if (player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue
+            || player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue - 1 && player.playerCardModel[0].cardValue == player.playerCardModel[2].cardValue - 2)
+        {
+            matchSet1 = true;
+            Debug.Log("MatchSet1");
+        }
+        if (player.playerCardModel[5].cardValue == player.playerCardModel[6].cardValue && player.playerCardModel[5].cardValue == player.playerCardModel[7].cardValue
+    || player.playerCardModel[5].cardValue == player.playerCardModel[6].cardValue - 1 && player.playerCardModel[5].cardValue == player.playerCardModel[7].cardValue - 2)
+        {
+            matchSet2 = true;
+            Debug.Log("MatchSet2");
+        }
+        if (player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue
+    || player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue - 1 && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue - 2)
+        {
+            matchSet3 = true;
+            Debug.Log("MatchSet3");
+        }
+        if (player.playerCardModel[3].cardValue == player.playerCardModel[4].cardValue)
+        {
+            matchPair4 = true;
+            Debug.Log("MatchPair4");
+        }
+        if (matchSet1 == true && matchSet2 == true && matchSet3 == true && matchPair4 == true)
+        {
+            if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                            && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[3].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else { Debug.Log("Not a consistent Set"); }
+
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+        else
+        {
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+        // Check 4th way to Win PairSetSetSet
+
+        if (player.playerCardModel[2].cardValue == player.playerCardModel[3].cardValue && player.playerCardModel[2].cardValue == player.playerCardModel[4].cardValue
+            || player.playerCardModel[2].cardValue == player.playerCardModel[3].cardValue - 1 && player.playerCardModel[2].cardValue == player.playerCardModel[4].cardValue - 2)
+        {
+            matchSet1 = true;
+            Debug.Log("MatchSet1");
+        }
+        if (player.playerCardModel[5].cardValue == player.playerCardModel[6].cardValue && player.playerCardModel[5].cardValue == player.playerCardModel[7].cardValue
+    || player.playerCardModel[5].cardValue == player.playerCardModel[7].cardValue - 1 && player.playerCardModel[5].cardValue == player.playerCardModel[7].cardValue - 2)
+        {
+            matchSet2 = true;
+            Debug.Log("MatchSet2");
+        }
+        if (player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue
+    || player.playerCardModel[8].cardValue == player.playerCardModel[9].cardValue - 1 && player.playerCardModel[8].cardValue == player.playerCardModel[10].cardValue - 2)
+        {
+            matchSet3 = true;
+            Debug.Log("MatchSet3");
+        }
+        if (player.playerCardModel[0].cardValue == player.playerCardModel[1].cardValue)
+        {
+            matchPair4 = true;
+            Debug.Log("MatchPair4");
+        }
+        if (matchSet1 == true && matchSet2 == true && matchSet3 == true && matchPair4 == true)
+        {
+            if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                             && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.LowerSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.LowerSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.LowerSet)
+            { Debug.Log("WIN Lower"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.UpperSet
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.UpperSet && player.playerCardModel[8].cardSet == CardModel.CardSet.Wild)
+            { Debug.Log("WIN Upper"); }
+            else if (player.playerCardModel[0].cardSet == CardModel.CardSet.Wild && player.playerCardModel[2].cardSet == CardModel.CardSet.Wild
+                && player.playerCardModel[5].cardSet == CardModel.CardSet.Wild && player.playerCardModel[8].cardSet == CardModel.CardSet.UpperSet)
+            { Debug.Log("WIN Upper"); }
+            else { Debug.Log("Not a consistent Set"); }
+
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+        else
+        {
+            matchSet1 = false;
+            matchSet2 = false;
+            matchSet3 = false;
+            matchPair4 = false;
+        }
+
     }
 
 }

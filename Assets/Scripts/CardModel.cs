@@ -19,6 +19,7 @@ public class CardModel : MonoBehaviour
     public int cardPosition;
 
     public CardOwner cardOwner;
+    public CardSet cardSet;
     public GamestateManager gamestateManager;
     public Player player;
     public Opponent opponent;
@@ -52,6 +53,10 @@ public class CardModel : MonoBehaviour
         else if (cardIndex >= 40 && cardIndex <= 43) { cardValue = 10; }
         else if (cardIndex >= 44 && cardIndex <= 47) { cardValue = 20; }
         else if (cardIndex >= 48 && cardIndex <= 51) { cardValue = 30; }
+
+        if (cardValue < 6) { cardSet = CardSet.LowerSet; }
+        else if (cardValue > 6 && cardValue < 31) { cardSet = CardSet.Wild; }
+        else { cardSet = CardSet.UpperSet; }
     }
 
     void OnMouseDown()
@@ -67,6 +72,13 @@ public class CardModel : MonoBehaviour
         Discard
     }
 
+    public enum CardSet
+    {
+        LowerSet,
+        UpperSet,
+        Wild
+    }
+
     public void DiscardCard()
     {
 
@@ -80,7 +92,7 @@ public class CardModel : MonoBehaviour
             spriteRenderer.sortingOrder = GamestateManager.instance.discardCount;
             cardPosition = GamestateManager.instance.discardCount;
             GamestateManager.instance.discardCount++;
-            GamestateManager.instance.gamePhase = GamestateManager.GamePhase.opponentDrawCard;
+            //GamestateManager.instance.gamePhase = GamestateManager.GamePhase.opponentDrawCard;
         }
     }
 
