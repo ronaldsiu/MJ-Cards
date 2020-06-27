@@ -45,18 +45,18 @@ public class CardModel : MonoBehaviour
         else if (cardIndex >= 8 && cardIndex <= 11) { cardValue = 3; }
         else if (cardIndex >= 12 && cardIndex <= 15) { cardValue = 4; }
         else if (cardIndex >= 16 && cardIndex <= 19) { cardValue = 5; }
-        else if (cardIndex >= 20 && cardIndex <= 23) { cardValue = 101; }
-        else if (cardIndex >= 24 && cardIndex <= 27) { cardValue = 102; }
-        else if (cardIndex >= 28 && cardIndex <= 31) { cardValue = 103; }
-        else if (cardIndex >= 32 && cardIndex <= 35) { cardValue = 104; }
-        else if (cardIndex >= 36 && cardIndex <= 39) { cardValue = 105; }
-        else if (cardIndex >= 40 && cardIndex <= 43) { cardValue = 10; }
-        else if (cardIndex >= 44 && cardIndex <= 47) { cardValue = 20; }
-        else if (cardIndex >= 48 && cardIndex <= 51) { cardValue = 30; }
+        else if (cardIndex >= 20 && cardIndex <= 23) { cardValue = 9; }
+        else if (cardIndex >= 24 && cardIndex <= 27) { cardValue = 10; }
+        else if (cardIndex >= 28 && cardIndex <= 31) { cardValue = 11; }
+        else if (cardIndex >= 32 && cardIndex <= 35) { cardValue = 12; }
+        else if (cardIndex >= 36 && cardIndex <= 39) { cardValue = 13; }
+        else if (cardIndex >= 40 && cardIndex <= 43) { cardValue = 6; }
+        else if (cardIndex >= 44 && cardIndex <= 47) { cardValue = 7; }
+        else if (cardIndex >= 48 && cardIndex <= 51) { cardValue = 8; }
 
         if (cardValue < 6) { cardSet = CardSet.LowerSet; }
-        else if (cardValue > 6 && cardValue < 31) { cardSet = CardSet.Wild; }
-        else { cardSet = CardSet.UpperSet; }
+        else if (cardValue > 8) { cardSet = CardSet.UpperSet; }
+        else { cardSet = CardSet.Wild; }
     }
 
     void OnMouseDown()
