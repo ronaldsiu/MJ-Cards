@@ -62,6 +62,7 @@ public class CardModel : MonoBehaviour
     void OnMouseDown()
     {
         DiscardCard();
+        Player.instance.SortPlayerHand();
     }
 
     public enum CardOwner
