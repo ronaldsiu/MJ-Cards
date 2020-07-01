@@ -11,6 +11,7 @@ public class DiscardPile : MonoBehaviour
     public CardModel cardModel;
 
     public GamestateManager gamestateManager;
+    public int lastDiscardCard;
 
     void Awake()
     {
@@ -27,6 +28,34 @@ public class DiscardPile : MonoBehaviour
         discardCardModel = new List<CardModel>();
     }
 
+    void Update()
+    {
+        lastDiscardCard = discardCardModel.Count - 1;
+    }
 
+    public void PickUp()
+    {
+        if(GamestateManager.instance.gamePhase == GamestateManager.GamePhase.playerTurn)
+        {
+            Player.instance.playerHand.Add(discardPile[lastDiscardCard]);
+            Player.instance.playerCardModel.Add(discardCardModel[lastDiscardCard]);
+            discardPile.Remove(discardPile[lastDiscardCard]);
+            discardCardModel.Remove(discardCardModel[lastDiscardCard]);
+            Player.instance.SortPlayerHand();
+            gamestateManager.gamePhase = GamestateManager.GamePhase.playerCheckForWinHand;
+            gamestateManager.GameFlow();
+            return;
+        }
+        else if(GamestateManager.instance.gamePhase == GamestateManager.GamePhase.opponentTurn)
+        {
+            Opponent.instance.opponentHand.Add(discardPile[lastDiscardCard]);
+            Opponent.instance.opponentCardModel.Add(discardCardModel[lastDiscardCard]);
+            discardPile.Remove(discardPile[lastDiscardCard]);
+            discardCardModel.Remove(discardCardModel[lastDiscardCard]);
+            Opponent.instance.SortOpponentHand();
+            gamestateManager.gamePhase = GamestateManager.GamePhase.opponentCheckForWinHand;
+            gamestateManager.GameFlow();
+        }
+    }
 
 }

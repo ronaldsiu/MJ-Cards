@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
         playerhandValues = new Dictionary<int, int>();
     }
 
-    public void resetHandValues()
+    public void resetPlayerHandValues()
     {
         playerhandValues.Clear();
 
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     public void GetPlayerHandValues()
     {
-        resetHandValues();
+        resetPlayerHandValues();
         for (int i = 0; i < playerCardModel.Count; i++)
         {
                 int count = 0;
@@ -103,10 +103,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        foreach (var pair in playerhandValues)
+        /*foreach (var pair in playerhandValues)
         {
             Debug.Log("hand Values" + pair.Key.ToString() + ' ' + pair.Value.ToString());
-        }
+        }*/
 
         if (playerhandValues[1] == 0 &&
             playerhandValues[2] == 0 &&
@@ -123,6 +123,10 @@ public class Player : MonoBehaviour
             playerhandValues[13] == 0)
         { Debug.Log("PLAYER WINS LOWER SET");
             return;
+        }
+        else
+        {
+            Debug.Log("Not a Winning Hand");
         }
 
         //Check in reverse Order
@@ -167,10 +171,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        foreach (var pair in playerhandValues)
+        /*foreach (var pair in playerhandValues)
         {
             Debug.Log("hand Values" + pair.Key.ToString() + ' ' + pair.Value.ToString());
-        }
+        }*/
 
         if (playerhandValues[1] == 0 &&
             playerhandValues[2] == 0 &&
@@ -188,6 +192,10 @@ public class Player : MonoBehaviour
         {
             Debug.Log("PLAYER WINS LOWER SET");
             return;
+        }
+        else
+        {
+            Debug.Log("Not a Winning Hand");
         }
     }
 
@@ -207,7 +215,7 @@ public class Player : MonoBehaviour
         }
 
         int n = 9;
-        while (n < 14)
+        while (n < 12)
         {
             if (playerhandValues[n] > 0 && playerhandValues[n + 1] > 0 && playerhandValues[n + 2] > 0)
             {
@@ -234,10 +242,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        foreach (var pair in playerhandValues)
+        /*foreach (var pair in playerhandValues)
         {
             Debug.Log("hand Values" + pair.Key.ToString() + ' ' + pair.Value.ToString());
-        }
+        }*/
 
         if (playerhandValues[1] == 0 &&
             playerhandValues[2] == 0 &&
@@ -255,10 +263,14 @@ public class Player : MonoBehaviour
         { Debug.Log("PLAYER WINS UPPER SET");
             return;
         }
+        else
+        {
+            Debug.Log("Not a Winning Hand");
+        }
         //Check in reverse Order
         GetPlayerHandValues();
         n = 9;
-        while (n < 14)
+        while (n < 12)
         {
             if (playerhandValues[n] > 0 && playerhandValues[n + 1] > 0 && playerhandValues[n + 2] > 0)
             {
@@ -296,10 +308,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        foreach (var pair in playerhandValues)
+        /*foreach (var pair in playerhandValues)
         {
             Debug.Log("hand Values" + pair.Key.ToString() + ' ' + pair.Value.ToString());
-        }
+        }*/
 
         if (playerhandValues[1] == 0 &&
             playerhandValues[2] == 0 &&
@@ -318,11 +330,71 @@ public class Player : MonoBehaviour
             Debug.Log("PLAYER WINS UPPER SET");
             return;
         }
+        else
+        {
+            Debug.Log("Not a Winning Hand");
+        }
 
 
     }
 
-    public void SortPlayerHand()
+    //Check Sets only
+    public void checkPlayerWinningHandSets()
+    {
+        //Check Matches 1-13
+        GetPlayerHandValues();
+        for (int i = 1; i < 14; i++)
+        {
+            if (playerhandValues[i] >= 3)
+            {
+                int count = 0;
+                playerhandValues.TryGetValue(i, out count);
+                playerhandValues.Remove(i);
+                playerhandValues.Add(i, count - 3);
+            }
+        }
+
+        for (int i = 1; i < 14; i++)
+        {
+            if (playerhandValues[i] == 2)
+            {
+                int count;
+                playerhandValues.TryGetValue(i, out count);
+                playerhandValues.Remove(i);
+                playerhandValues.Add(i, count - 2);
+                break;
+            }
+        }
+
+        /*foreach (var pair in playerhandValues)
+        {
+            Debug.Log("hand Values" + pair.Key.ToString() + ' ' + pair.Value.ToString());
+        }*/
+
+        if (playerhandValues[1] == 0 &&
+            playerhandValues[2] == 0 &&
+            playerhandValues[3] == 0 &&
+            playerhandValues[4] == 0 &&
+            playerhandValues[5] == 0 &&
+            playerhandValues[6] == 0 &&
+            playerhandValues[7] == 0 &&
+            playerhandValues[8] == 0 &&
+            playerhandValues[9] == 0 &&
+            playerhandValues[10] == 0 &&
+            playerhandValues[11] == 0 &&
+            playerhandValues[12] == 0 &&
+            playerhandValues[13] == 0)
+        {
+            Debug.Log("PLAYER WINS LOWER SET");
+            return;
+        }
+        else
+        {
+            Debug.Log("Not a Winning Hand");
+        }
+    }
+
+        public void SortPlayerHand()
     {
         playerHand.Sort();
         playerCardModel.Sort(SortFunc);

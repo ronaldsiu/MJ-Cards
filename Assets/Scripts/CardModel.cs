@@ -62,7 +62,6 @@ public class CardModel : MonoBehaviour
     void OnMouseDown()
     {
         DiscardCard();
-        Player.instance.SortPlayerHand();
     }
 
     public enum CardOwner
@@ -83,7 +82,7 @@ public class CardModel : MonoBehaviour
     public void DiscardCard()
     {
 
-        if (GamestateManager.instance.gamePhase == GamestateManager.GamePhase.playerdDiscardCard && cardOwner == CardOwner.Player)
+        if (GamestateManager.instance.gamePhase == GamestateManager.GamePhase.playerDiscardCard && cardOwner == CardOwner.Player)
         {
             DiscardPile.instance.discardPile.Add(Player.instance.playerHand[cardPosition]);
             DiscardPile.instance.discardCardModel.Add(Player.instance.playerCardModel[cardPosition]);
@@ -93,8 +92,30 @@ public class CardModel : MonoBehaviour
             spriteRenderer.sortingOrder = GamestateManager.instance.discardCount;
             cardPosition = GamestateManager.instance.discardCount;
             GamestateManager.instance.discardCount++;
-            //GamestateManager.instance.gamePhase = GamestateManager.GamePhase.opponentDrawCard;
+            GamestateManager.instance.gamePhase = GamestateManager.GamePhase.opponentTurn;
+            GamestateManager.instance.isPlayerTurn = false;
+            GamestateManager.instance.canDraw = true;
+            Player.instance.SortPlayerHand();
+            GamestateManager.instance.GameFlow();
+            
         }
+        else if (GamestateManager.instance.gamePhase == GamestateManager.GamePhase.opponentDiscardCard && cardOwner == CardOwner.Opponent)
+        {
+            DiscardPile.instance.discardPile.Add(Opponent.instance.opponentHand[cardPosition]);
+            DiscardPile.instance.discardCardModel.Add(Opponent.instance.opponentCardModel[cardPosition]);
+            Opponent.instance.opponentHand.Remove(Opponent.instance.opponentHand[cardPosition]);
+            Opponent.instance.opponentCardModel.Remove(Opponent.instance.opponentCardModel[cardPosition]);
+            transform.position = GamestateManager.instance.discardPosition + new Vector3(0.5f, 0, 0) * GamestateManager.instance.discardCount;
+            spriteRenderer.sortingOrder = GamestateManager.instance.discardCount;
+            cardPosition = GamestateManager.instance.discardCount;
+            GamestateManager.instance.discardCount++;
+            GamestateManager.instance.gamePhase = GamestateManager.GamePhase.playerTurn;
+            GamestateManager.instance.isPlayerTurn = true;
+            GamestateManager.instance.canDraw = true;
+            Opponent.instance.SortOpponentHand();
+            GamestateManager.instance.GameFlow();
+        }
+
     }
 
     public void ToggleFace()

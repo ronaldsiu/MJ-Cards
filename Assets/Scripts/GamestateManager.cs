@@ -26,6 +26,7 @@ public class GamestateManager : MonoBehaviour
     public bool canDraw;
 
     public GamePhase gamePhase;
+    public UiManager uiManager;
 
     void Awake()
     {
@@ -39,24 +40,107 @@ public class GamestateManager : MonoBehaviour
         }
 
         discardCount = 0;
+        gamePhase = GamePhase.gameStarts;
 
     }
 
     void Start()
     {
-        Deck.instance.Shuffle();
-        DealCards();
+        GameFlow();
     }
 
     public enum GamePhase
     {
         gameStarts,
-        playerDrawCard,
+        playerTurn,
         playerCheckForWinHand,
-        playerdDiscardCard,
-        opponentDrawCard,
+        playerDiscardCard,
+        opponentTurn,
         opponentCheckForWinHand,
         opponentDiscardCard
+    }
+
+    public void GameFlow()
+    {
+        switch(gamePhase)
+        {
+            case GamePhase.gameStarts:
+                {
+                    Debug.Log("Shuffle and Dealing Hands");
+                    StartCoroutine(StartGame());
+                    break;
+                }
+            case GamePhase.playerTurn:
+                {
+                    Debug.Log("Player's Turn");
+                    uiManager.instruction.text = "Draw or Pickup a Card";
+                    break;
+                    //Wait for Player to draw or pickup card
+                }
+            case GamePhase.playerCheckForWinHand:
+                {
+                    Debug.Log("Checking Player's Hand");
+                    uiManager.instruction.text = "Checking Player's Hand";
+                    //Check if Player has the winning Hand
+                    player.checkPlayerWinningHandLower();
+                    player.checkPlayerWinningHandUpper();
+                    player.checkPlayerWinningHandSets();
+                    gamePhase = GamePhase.playerDiscardCard;
+                    GameFlow();
+                    break;
+                }
+            case GamePhase.playerDiscardCard:
+                {
+                    Debug.Log("Waiting for Player to Discard");
+                    uiManager.instruction.text = "Waiting for Player to Discard";
+                    break;
+                    //Waiting for Player to Discard Card
+                }
+            case GamePhase.opponentTurn:
+                {
+                    Debug.Log("Opponent's Turn");
+                    uiManager.instruction.text = "Opponent's Turn";
+
+
+                    break;
+                    //Wait for Opponent to draw or pickup card
+                }
+            case GamePhase.opponentCheckForWinHand:
+                {
+                    Debug.Log("Checking Opponent's Hand");
+                    uiManager.instruction.text = "Checking Opponent's Hand";
+                    opponent.checkOpponentWinningHandLower();
+                    opponent.checkOpponentWinningHandUpper();
+                    opponent.checkOpponentWinningHandSets();
+                    gamePhase = GamePhase.opponentDiscardCard;
+                    GameFlow();
+                    break;
+                    //Check if Opponent has the winning Hand
+                }
+            case GamePhase.opponentDiscardCard:
+                {
+                    Debug.Log("Waiting for Opponent to Discard");
+                    uiManager.instruction.text = "Waiting for Opponent to Discard";
+                    break;
+                    //Waiting for Opponent to Discard Card
+                }
+
+        }
+    }
+
+    public IEnumerator StartGame()
+    {
+        uiManager.instruction.text = "Dealing Cards";
+        Deck.instance.Shuffle();
+        DealCards();
+        yield return new WaitForSeconds(3);
+        gamePhase = GamePhase.playerTurn;
+        player.SortPlayerHand();
+        opponent.SortOpponentHand();
+        isPlayerTurn = true;
+        canDraw = true;
+        GameFlow();
+
     }
 
     public void DrawCard()
@@ -77,8 +161,9 @@ public class GamestateManager : MonoBehaviour
             deck.cards.Remove(deck.cards[0]);
             player.playerCardModel.Add(cardModel);
             cardModel.cardOwner = CardModel.CardOwner.Player;
-            //canDraw = false;
-            //gamePhase = GamePhase.playerCheckForWinHand;
+            canDraw = false;
+            gamePhase = GamePhase.playerCheckForWinHand;
+            GameFlow();
         }
         else if (isPlayerTurn == false && canDraw == true)
         {
@@ -94,8 +179,8 @@ public class GamestateManager : MonoBehaviour
             deck.cards.Remove(deck.cards[0]);
             opponent.opponentCardModel.Add(cardModel);
             cardModel.cardOwner = CardModel.CardOwner.Opponent;
-            canDraw = true;
             gamePhase = GamePhase.opponentCheckForWinHand;
+            GameFlow();
         }
     }
 
